@@ -16,9 +16,18 @@ int main(int argc, char *argv[])
  printf("buf2 addr: %p\n", &buf2);
 
  // Heap corruption
- char *buf3 = malloc(12 * sizeof(char));
+ char *buf3 = malloc(12 * sizeof(char)); //Fuga de memória. A memória alocada por malloc nunca é liberada. Na função principal
  char *buf4 = malloc(12 * sizeof(char));
 
+//O resultado de malloc, que pode retornar fluxos nulos para o primeiro argumento de strcpy. 
+//Isso pode resultar em comportamento indefinido. Considere adicionar uma verificação de nulidade.
+/*
+char *buf3 = malloc(-1);
+if (!buf3 || !buf4) {
+  perror("Erro na alocação de memória");
+  return 1;
+}
+*/
  strcpy(buf4, "mywordshere");
  strcpy(buf3, "1234567890123456789012345678901234567890");
 
