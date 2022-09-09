@@ -9,10 +9,19 @@ o buffer fornecido, o que resultará em uma vulnerabilidade grave de estouro de 
 void BufferOverflow()
 {
  char palavra[10];
+ char buffer[10];
+
  memset(palavra, 0, sizeof(palavra));
  printf("palavra: ");
  //scanf("%s", palavra); //stack smashing detected
- scanf("%10s", palavra); //correção
+ scanf("%10s", buffer); //correção
+
+ int len = strlen(buffer);
+
+ //sprintf(palavra, "ola %s", buffer); // Usar sprintf pode levar a vulnerabilidades graves de estouro de buffer. Use a alternativa segura snprintf.
+
+ snprintf(palavra, len, "ola %s", buffer); // Correção
+
 
  printf("palavra: %s\n", palavra);
 }
